@@ -3,6 +3,8 @@ import '@/styles/globals.css';
 import type { Metadata } from 'next';
 import { Inter as FontSans } from 'next/font/google';
 
+import { ThemeProvider } from '@/components/theme-provider';
+
 const fontSans = FontSans({
   subsets: ['latin'],
   variable: '--font-sans',
@@ -18,7 +20,7 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning={true}>
       <head />
       <body
         className={cn(
@@ -26,7 +28,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
           fontSans.variable
         )}
       >
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

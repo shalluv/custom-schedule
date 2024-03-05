@@ -23,6 +23,16 @@ const config = {
         sans: ['var(--font-sans)', ...fontFamily.sans],
       },
       colors: {
+        custom: {
+          red: 'hsl(0 72.2% 50.6%)',
+          rose: 'hsl(346.8 77.2% 49.8%)',
+          orange: 'hsl(24.6 95% 53.1%)',
+          green: 'hsl(142.1 76.2% 36.3%)',
+          blue: 'hsl(221.2 83.2% 53.3%)',
+          yellow: 'hsl(47.9 95.8% 53.1%)',
+          purple: 'hsl(262.1 83.3% 57.8%)',
+        },
+
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
