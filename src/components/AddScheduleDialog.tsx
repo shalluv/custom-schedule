@@ -257,6 +257,32 @@ const AddForm = ({
         }
       }
     }
+    for (let i = 0; i < schedules.length; i++) {
+      for (let j = 0; j < schedules[i].items.length; j++) {
+        for (let k = 0; k < items.length; k++) {
+          if (schedules[i].items[j].day === items[k].day) {
+            const start = new Date(`1970-01-01T${schedules[i].items[j].start}`);
+            const end = new Date(`1970-01-01T${schedules[i].items[j].end}`);
+            const start2 = new Date(`1970-01-01T${items[k].start}`);
+            const end2 = new Date(`1970-01-01T${items[k].end}`);
+            if (
+              (start >= start2 && start < end2) ||
+              (end > start2 && end <= end2) ||
+              (start2 >= start && start2 < end) ||
+              (end2 > start && end2 <= end)
+            ) {
+              result.errors = {
+                ...result.errors,
+                items: {
+                  type: 'custom',
+                  message: `Overlapping: ${items[k].day}, ${items[k].start} - ${items[k].end} overlaps with ${schedules[i].title}'s at ${schedules[i].items[j].start} - ${schedules[i].items[j].end}`,
+                },
+              };
+            }
+          }
+        }
+      }
+    }
     return result;
   };
 
@@ -313,7 +339,7 @@ const AddForm = ({
         <FormField
           control={form.control}
           name="items"
-          render={({ field }) => (
+          render={() => (
             <FormItem>
               <FormLabel>Items</FormLabel>
               <FormMessage />
@@ -375,7 +401,9 @@ const AddScheduleDialog = (): JSX.Element => {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
-        <Button>Add New Schedule</Button>
+        <Button className="flex w-full items-center justify-center text-center">
+          Add New Schedule
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
